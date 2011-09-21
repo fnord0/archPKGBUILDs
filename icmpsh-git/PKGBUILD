@@ -73,4 +73,6 @@ package() {
   install -Dm644 README \
     ${pkgdir}/usr/src/${_gitname}/README || return 1
   cp -R screenshots ${pkgdir}/usr/src/${_gitname} || return 1
+
+  msg "See Bernardo's blogpost on icmpsh @ http://bernardodamele.blogspot.com/2011/04/reverse-connection-icmp-shell.html"
 }
