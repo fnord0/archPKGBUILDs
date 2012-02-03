@@ -1,0 +1,48 @@
+# Contributor: fnord0 <fnord0 AT riseup DOT net>
+
+pkgname=pmcma-git
+pkgver=20111014
+pkgrel=1
+pkgdesc="a tool aimed at determining if a given software bug is an exploitable vulnerability by automatically writing an exploit for it"
+arch=('i686' 'x86_64')
+url=("http://github.com/toucan-system/pmcma")
+license=('GPL')
+provides=('pmcma')
+makedepends=('git' 'gcc' 'cmake' 'flex')
+_gitroot=("http://github.com/toucan-system/pmcma.git")
+_gitname=("pmcma")
+
+build() {
+  cd ${srcdir}
+
+ ## Git checkout
+  if [ -d ${srcdir}/${_gitname} ] ; then
+    msg "Git checkout:  Updating existing tree"
+    cd ${_gitname} && git pull origin || return 1
+    msg "Git checkout:  Tree has been updated"
+  else
+    msg "Git checkout:  Retrieving sources"
+    git clone ${_gitroot} || return 1
+  fi
+  msg "Checkout completed"
+
+ ## Build
+  rm -rf ${srcdir}/${_gitname}-build
+  cp -r ${srcdir}/${_gitname} ${srcdir}/${_gitname}-build
+
+  cd ${srcdir}/${_gitname}-build
+  make
+}
+package() {
+  cd ${srcdir}/${_gitname}-build
+  install -d ${pkgdir}/usr/src/${_gitname} || return 1
+  install -d ${pkgdir}/usr/bin || return 1
+  cp -R * ${pkgdir}/usr/src/${_gitname} || return 1
+  ln -s /usr/src/${_gitname}/pmcma \
+    ${pkgdir}/usr/bin/pmcma || return 1
+
+  #user notification
+  echo -e ""
+  echo -e "\e[1;31m[\e[0m\e[1;34m*\e[0m\e[1;31m]\e[0m \e[1;31msee the pmcma website @ '\e[0m\e[1;34mhttp://www.pmcma.org/\e[0m\e[1;31m'\e[0m"
+  echo -e ""
+}
