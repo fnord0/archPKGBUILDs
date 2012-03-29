@@ -1,0 +1,38 @@
+# Contributor: fnord0 <fnord0 AT riseup DOT net>
+pkgname=fuzzdb-svn
+pkgver=187
+pkgrel=1
+pkgdesc="Attack and discovery pattern database for application fuzz testing"
+arch=('i686' 'x86_64')
+url="http://http://code.google.com/p/fuzzdb/"
+license=('custom')
+makedepends=('subversion')
+provides=('fuzzdb')
+_svntrunk=http://fuzzdb.googlecode.com/svn/trunk/
+_svnmod=fuzzdb
+
+build() {
+  	cd ${srcdir}
+	if [ -d ${srcdir}/.svn ]; then
+	  msg 'Updating FuzzDB SVN...'
+	  svn up ${srcdir} || return 1
+	else
+	  msg 'Checking out FuzzDB SVN...'
+	  svn co ${_svntrunk} ${srcdir} || return 1
+	fi
+        msg "FuzzDB SVN checkout complete, or the server timed out"
+
+        mkdir -p ${pkgdir}/usr/src || return 1
+        cd ${pkgdir}/usr/src
+        cp -R ${srcdir} ${_svnmod} || return 1
+
+        cd ${srcdir}
+        install -Dm644 ${srcdir}/_copyright.txt ${pkgdir}/usr/share/licenses/${_svnmod}/_copyright.txt || return 1
+
+        #user notification
+        echo -e ""
+        echo -e "\e[1;34m>>>\e[0m \e[1;31mFuzzDB is installed @ /usr/src/fuzzdb\e[0m"
+        echo -e "\e[1;34m>>>\e[0m \e[1;31mFuzzDB wiki @ \e[0m\e[1;32mhttp://code.google.com/p/fuzzdb/wiki\e[0m"
+        echo -e ""
+}
+# vim:syntax=sh
