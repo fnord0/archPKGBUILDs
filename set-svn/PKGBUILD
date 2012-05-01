@@ -1,6 +1,6 @@
 # Contributor: fnord0 <fnord0 AT riseup DOT net>
 pkgname=set-svn
-pkgver=831
+pkgver=1243
 pkgrel=1
 pkgdesc="Social Engineering Toolkit (SET): a python-driven suite of custom tools focusing on attacking the human element of pentesting"
 arch=('i686' 'x86_64')
@@ -22,6 +22,7 @@ provides=('set')
 _svntrunk=http://svn.secmaniac.com/social_engineering_toolkit
 _svnmod=SET
 options=('!strip')
+backup=('usr/src/SET/config/set_config')
 
 build() {
 	if [ -d ${srcdir}/.svn ]; then
