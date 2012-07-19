@@ -2,11 +2,11 @@
 
 pkgname=phoenix-miner-svn
 pkgver=103
-pkgrel=1
+pkgrel=3
 pkgdesc="Phoenix miner - efficient, fast, modular, python-based, openCL GPU bitcoin miner"
 arch=('i686' 'x86_64')
 url="https://bitcointalk.org/?topic=6458.0"
-license=('Public Domain')
+license=('BSD')
 depends=('python2' 'python2-pyopencl' 'twisted' 'boost' 'python2-numpy')
 makedepends=('subversion')
 
