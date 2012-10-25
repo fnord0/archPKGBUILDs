@@ -9,7 +9,7 @@ arch=('i686' 'x86_64')
 url="http://peachfuzzer.com/"
 license=('MIT')
 depends=('pyrex' 'gtk2' 'unzip' 'tar' 'twisted' 'python2-pyasn1' 'wxpython' 'zope-interface')
-provides=('python-cdeepcopy' 'python-cpeach' 'peach-pypcap' 'python-pydbgeng' 'python-vdebug' 'python-4suite-xml' 'python-multiprocessing' 'python-psutil' 'python-pyvmware')
+provides=('python2-cdeepcopy' 'python2-cpeach' 'peach2-pypcap' 'python2-pydbgeng' 'python2-vdebug' 'python2-4suite-xml' 'python2-multiprocessing' 'python2-psutil' 'python2-pyvmware')
 conflicts=('4suite' 'python-multiprocessing')
 optdepends=('pygtk: VDB gui support'
 	    'pango: VDB gui support')
