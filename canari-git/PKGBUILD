@@ -1,0 +1,60 @@
+# Contributor: fnord0 <fnord0 AT riseup DOT net>
+
+pkgname=canari-git
+pkgver=20130101
+pkgrel=1
+pkgdesc=""
+arch=('i686' 'x86_64')
+url=('https://github.com/allfro/canari')
+license=('GPL')
+makedepends=('git')
+depends=('python2' 'maltego')
+_gitroot="https://github.com/allfro/canari.git"
+_gitname=('canari')
+
+build() {
+  cd ${srcdir}
+  msg "Connecting to GIT server...."
+
+  if [[ -d ${srcdir}/${_gitname} ]]; then
+    msg "Git checkout:  Updating existing tree"
+    cd ${_gitname} && git pull origin || return 1
+    msg "Git checkout:  Tree has been updated"
+  else
+    msg "Git checkout:  Retrieving sources"
+    git clone ${_gitroot} ${_gitname} || return 1
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "Starting build..."
+
+  rm -rf ${srcdir}/${_gitname}-build
+  install -d ${pkgdir}/usr/bin || return 1
+  install -d ${pkgdir}/usr/src/${_gitname} || return 1
+  git clone ${srcdir}/${_gitname} ${pkgdir}/usr/src/${_gitname} || return 1
+  
+  cd ${srcdir}/${_gitname}
+  #archlinux python2 fix
+  sed -i 's|python$|python2|g' *.py || return 1
+
+  python2 setup.py build
+}
+
+package() {
+  cd ${srcdir}/${_gitname}
+  #python2 setup.py install --prefix=$pkgdir/usr 
+  python2 setup.py install --root=${pkgdir}/ --optimize=1 || return 1
+
+  #create startup app
+  #echo "#!/bin/sh" > ${pkgdir}/usr/bin/${_gitname}
+  #echo "cd /usr/src/canari" >> ${pkgdir}/usr/bin/${_gitname}
+  #echo "./python2 canari \"\$@\"" >> ${pkgdir}/usr/bin/${_gitname}
+  #echo "cd -" >> ${pkgdir}/usr/bin/${_gitname}
+  #chmod +x ${pkgdir}/usr/bin/${_gitname}
+
+  echo -n ""
+  echo -n ""
+  echo -n "     # canari install-package sploitego"
+  echo -n ""
+}
+# vim:set ts=2 sw=2 et:

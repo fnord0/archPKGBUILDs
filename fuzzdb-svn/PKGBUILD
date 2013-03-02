@@ -1,6 +1,6 @@
 # Contributor: fnord0 <fnord0 AT riseup DOT net>
 pkgname=fuzzdb-svn
-pkgver=187
+pkgver=188
 pkgrel=1
 pkgdesc="Attack and discovery pattern database for application fuzz testing"
 arch=('i686' 'x86_64')

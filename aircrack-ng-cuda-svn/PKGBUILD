@@ -3,7 +3,7 @@
 
 pkgname=aircrack-ng-cuda-svn
 pkgver=1550
-pkgrel=9
+pkgrel=10
 pkgdesc="Wifi security suite with NVIDIA GPU-enhanced (using CUDA) WPA/WPA2 key cracking"
 arch=('i686' 'x86_64')
 url="http://www.aircrack-ng.org"
@@ -39,8 +39,9 @@ build() {
     sed -i "s/lib -lcuda -lcudart/lib64 -lcuda -lcudart -lstdc++/" src/Makefile || return 1
     #sed -i "s|lib -lcuda -lcudart|opt/cuda/lib64 -lcuda -lcudart -lstdc++|" src/Makefile || return 1
   else
-    #sed -i "s/lib -lcuda -lcudart/lib -lcuda -lcudart -lstdc++/" src/Makefile || return 1
-    sed -i "s|lib -lcuda -lcudart|lib -lcuda -lcudart -lstdc++|" src/Makefile || return 1
+    #uncomment below line, and comment out the one below it = if you are on x86 (32bit), and running cuda earlier then v5
+    #sed -i "s|lib -lcuda -lcudart|lib -lcuda -lcudart -lstdc++|" src/Makefile || return 1
+    sed -i "s|lib -lcuda -lcudart|lib -lcudart -lstdc++|" src/Makefile || return 1
   fi
 
   #sed -i s#/bin/nvcc#/opt/cuda/bin/nvcc#g src/Makefile || return 1

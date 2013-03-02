@@ -5,6 +5,7 @@ pkgver=1.6
 pkgrel=1
 epoch=
 pkgdesc="python(2) yara bindings - yara = a malware identification and classification tool"
+url="http://code.google.com/p/yara-project/"
 arch=('x86' 'x86_64')
 license=('APACHE')
 depends=('python2')
