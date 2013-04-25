@@ -17,7 +17,7 @@ optdepends=('ettercap: DNS spoofing and ARP cache poisoning capabilities'
       'openssl: create self-signed SSL certificates'
       'xterm: default terminal for SET command center'
       'upx: executable packer for better AV evasion'
-      'aircrack-ng: rouge access point capabilities'
+      'aircrack-ng: rogue access point capabilities'
       'dsniff: DNS spoofing capabilities')
 provides=('set')
 noextract=()
