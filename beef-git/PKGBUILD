@@ -1,51 +1,54 @@
-# Contributor: fnord0 <fnord0 AT riseup DOT net>
-
 pkgname=beef-git
-pkgver=20120720
+pkgver=0.4.4.7.43.g41bfb8e
 pkgrel=1
 pkgdesc="BeEF, the Browser Exploitation Framework - it is a penetration testing tool that focuses on the web browser"
 arch=('i686' 'x86_64')
 url=('http://beefproject.com/')
 license=('Apache')
 makedepends=('git')
-depends=('ruby' 'ruby-sqlite3' 'ruby-bundler' 'ruby-thin' 'ruby-sinatra' 'ruby-ansi' 'ruby-term-ansicolor' 'ruby-dm-core' 'ruby-json' 'ruby-data_objects' 'ruby-dm-sqlite-adapter' 'ruby-parseconfig' 'ruby-erubis' 'ruby-dm-migrations' 'ruby-msfrpc-client' 'ruby-eventmachine' 'ruby-em-websocket' 'ruby-addressable' 'ruby-rack-protection' 'ruby-dm-do-adapter' 'ruby-do_sqlite3' 'ruby-librex' 'ruby-jsmin' 'ruby-msgpack')
+depends=('ruby' 'ruby-sqlite3' 'ruby-bundler>=1.3-1' 'ruby-thin>=1.5.1-1' 'ruby-sinatra>=1.3.3-1' 'ruby-ansi' 'ruby-term-ansicolor' 'ruby-dm-core>=1.2.1-1' 'ruby-json' 'ruby-data_objects>=0.10.13-1' 'ruby-dm-sqlite-adapter' 'ruby-parseconfig' 'ruby-erubis' 'ruby-dm-migrations' 'ruby-msfrpc-client' 'ruby-eventmachine>=1.0.3-1' 'ruby-em-websocket' 'ruby-addressable' 'ruby-rack-protection>=1.5.1-1' 'ruby-dm-do-adapter' 'ruby-do_sqlite3>=0.10.13-1' 'ruby-librex' 'ruby-jsmin' 'ruby-msgpack' 'ruby-twitter' 'ruby-uglifier' 'ruby-libv8>=3.11.8.17-1' 'ruby-therubyracer>=0.11.4' 'ruby-parseconfig' 'ruby-erubis' 'ruby-rubyzip>=1.0.0-1' 'ruby-daemons>=1.1.9-1' 'ruby-tilt' 'ruby-msgpack' 'ruby-simple_oauth>=0.2.0-1' 'ruby-faraday' 'ruby-multi_json')
 provides=('beef')
-_gitroot="https://github.com/beefproject/beef"
 _gitname=('beef')
+source=("$_gitname"::'git://github.com/beefproject/beef.git')
+md5sums=('SKIP')
 
-build() {
-  cd ${srcdir}
-  msg "Connecting to GIT server...."
-
-  if [[ -d ${srcdir}/${_gitname} ]]; then
-    msg "Git checkout:  Updating existing tree"
-    cd ${_gitname} && git pull origin || return 1
-    msg "Git checkout:  Tree has been updated"
-  else
-    msg "Git checkout:  Retrieving sources"
-    git clone ${_gitroot} ${_gitname} || return 1
-  fi
-
-  msg "GIT checkout done or server timeout"
-  msg "Starting build..."
-
-  rm -rf ${srcdir}/${_gitname}-build
-  install -d ${pkgdir}/usr/bin || return 1
-  install -d ${pkgdir}/usr/src/${_gitname} || return 1
-  git clone ${srcdir}/${_gitname} ${pkgdir}/usr/src/${_gitname} || return 1
-  
-  ## archlinux fix
-   # we're CHANGING => gem "eventmachine", "0.12.10"
-   # TO             => gem "eventmachine", "1.0.0beta4"
-  sed -i 's|0.12.10|1.0.0beta4|' ${pkgdir}/usr/src/${_gitname}/Gemfile || return 1
+pkgver() {
+  cd ${_gitname}
+  git describe | sed 's/^v//;s/-/./g;s/_/./g;s/^beef.//;'
 }
 
 package() {
-  #create startup app
-  echo "#!/bin/sh" > ${pkgdir}/usr/bin/${_gitname}
-  echo "cd /usr/src/beef" >> ${pkgdir}/usr/bin/${_gitname}
-  echo "./beef \"\$@\"" >> ${pkgdir}/usr/bin/${_gitname}
-  echo "cd -" >> ${pkgdir}/usr/bin/${_gitname}
-  chmod +x ${pkgdir}/usr/bin/${_gitname}
+  cd ${_gitname}
+
+  install -d -m755 ${pkgdir}/usr/bin/
+  install -d -m755 ${pkgdir}/usr/share/${_gitname}
+
+  git clone ${srcdir}/${_gitname} ${pkgdir}/usr/share/${_gitname}
+
+  ## archlinux fixes applied to the Gemfile
+  # we're CHANGING => gem "eventmachine", "0.12.10"
+  # TO             => gem "eventmachine", ">=0.12.10"
+  sed -i 's|0.12.10|>=0.12.10|' ${pkgdir}/usr/share/${_gitname}/Gemfile
+  # changing the sinatra requirement from v.1.4.2 to >=1.3.3
+  sed -i 's|1.4.2|>=1.3.3|' ${pkgdir}/usr/share/${_gitname}/Gemfile
+  # changing em-websocket gem requirement from ~> 0.3.6 TO >=0.3.6
+  sed -i 's|~> 0.3.6|>=0.3.6|' ${pkgdir}/usr/share/${_gitname}/Gemfile
+  # changing uglifier gem requirement from ~> 2.2.1 TO >=1.2.4
+  sed -i 's|~> 2.2.1|>=1.2.4|' ${pkgdir}/usr/share/${_gitname}/Gemfile
+  # changing therubyracer gem requirement from ~> 0.12.0 TO >=0.11.4
+  sed -i 's|~> 0.12.0|>=0.11.4|' ${pkgdir}/usr/share/${_gitname}/Gemfile
+  # adding a 'ruby-rack-protection' gem requirement >=1.2.0
+  sed -i '/gem "rack"/agem "rack-protection", ">=1.5.1"' ${pkgdir}/usr/share/${_gitname}/Gemfile
+  ## adding a 'ruby-simple_oauth' gem requirement >=0.9.1
+  ##sed -i '/gem "rubyzip"/agem "simple_oauth", ">=0.1.9"' ${pkgdir}/usr/share/${_gitname}/Gemfile
+  # to build archlinux package 'ruby-therubyracer' v0.12.0 you need to have a working/functional ruby-libv8 3.16.14.3-1
+
+  # Make joint script.
+  cat > "$pkgdir/usr/bin/beef" <<EOF
+#!/bin/sh
+cd /usr/share/beef
+ruby beef "\$@"
+cd -
+EOF
+  chmod +x "$pkgdir/usr/bin/beef"
 }
-# vim:set ts=2 sw=2 et:

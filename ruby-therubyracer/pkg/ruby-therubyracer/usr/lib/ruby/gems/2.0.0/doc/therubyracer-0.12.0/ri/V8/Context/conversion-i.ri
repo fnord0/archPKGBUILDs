@@ -1,0 +1,2 @@
+U:RDoc::Attr[iI"conversion:ETI"V8::Context#conversion;TI"R;T:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;	[I"@!attribute [r] conversion;To:RDoc::Markup::Verbatim;	[I"B@return [V8::Conversion] conversion behavior for this context;T:@format0:
+@fileI"lib/v8/context.rb;T:0@omit_headings_from_table_of_contents_below0F@I"V8::Context;TcRDoc::NormalClass0

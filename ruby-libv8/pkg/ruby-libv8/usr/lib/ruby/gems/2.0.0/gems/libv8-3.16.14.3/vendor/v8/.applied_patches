@@ -1,0 +1,4 @@
+/home/fnord0/devel/github/archPKGBUILDs/ruby-libv8/pkg/ruby-libv8/usr/lib/ruby/gems/2.0.0/gems/libv8-3.16.14.3/patches/disable-building-tests.patch
+/home/fnord0/devel/github/archPKGBUILDs/ruby-libv8/pkg/ruby-libv8/usr/lib/ruby/gems/2.0.0/gems/libv8-3.16.14.3/patches/do-not-imply-vfp3-and-armv7.patch
+/home/fnord0/devel/github/archPKGBUILDs/ruby-libv8/pkg/ruby-libv8/usr/lib/ruby/gems/2.0.0/gems/libv8-3.16.14.3/patches/fPIC-for-static.patch
+/home/fnord0/devel/github/archPKGBUILDs/ruby-libv8/pkg/ruby-libv8/usr/lib/ruby/gems/2.0.0/gems/libv8-3.16.14.3/patches/gcc48-wno-unused-local-typedefs.patch

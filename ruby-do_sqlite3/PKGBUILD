@@ -3,7 +3,7 @@
 
 pkgname=ruby-do_sqlite3
 _gemname=${pkgname#ruby-}
-pkgver=0.10.8
+pkgver=0.10.13
 pkgrel=1
 pkgdesc="Implements the DataObjects API for Sqlite3"
 arch=('any')
@@ -12,7 +12,7 @@ license=('custom')
 depends=('ruby' 'rubygems')
 source=(http://rubygems.org/downloads/${_gemname}-${pkgver}.gem)
 noextract=(${_gemname}-${pkgver}.gem)
-md5sums=('b137c46cc1d1da2715f6d126c6d6cfd1')
+md5sums=('568a1f79fa430a5f9165fd403889e6a2')
 
 build() {
   cd "${srcdir}"

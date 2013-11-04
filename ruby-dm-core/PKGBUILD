@@ -3,16 +3,16 @@
 
 pkgname=ruby-dm-core
 _gemname=${pkgname#ruby-}
-pkgver=1.2.0
+pkgver=1.2.1
 pkgrel=1
-pkgdesc="DataMapper - Core"
+pkgdesc="DataMapper core library"
 arch=('any')
 url="http://github.com/datamapper/dm-core"
 license=('custom')
 depends=('ruby' 'rubygems')
 source=(http://rubygems.org/downloads/${_gemname}-${pkgver}.gem)
 noextract=(${_gemname}-${pkgver}.gem)
-md5sums=('415c23a0d7ee9b1700517846db3754bb')
+md5sums=('ae4da482e5a28bda18c37ec00fdf3912')
 
 build() {
   cd "${srcdir}"

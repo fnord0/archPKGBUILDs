@@ -1,0 +1,2 @@
+U:RDoc::Attr[iI"javascript_backtrace:ETI"#V8::Error#javascript_backtrace;TI"R;T:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;	[I"*@!attribute [r] javascript_backtrace ;TI"^@return [V8::StackTrace] the complete JavaScript stack at the point this error was thrown;T:
+@fileI"lib/v8/error.rb;T:0@omit_headings_from_table_of_contents_below0F@I"V8::Error;TcRDoc::NormalClass0

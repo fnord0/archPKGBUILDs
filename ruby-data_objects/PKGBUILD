@@ -3,7 +3,7 @@
 
 pkgname=ruby-data_objects
 _gemname=${pkgname#ruby-}
-pkgver=0.10.8
+pkgver=0.10.13
 pkgrel=1
 pkgdesc="Provide a standard and simplified API for communicating with RDBMS from Ruby"
 arch=('any')
@@ -12,7 +12,7 @@ license=('MIT' 'custom')
 depends=('ruby' 'rubygems')
 source=(http://rubygems.org/downloads/${_gemname}-${pkgver}.gem)
 noextract=(${_gemname}-${pkgver}.gem)
-md5sums=('d29e371e9659236069d9994f4533baeb')
+md5sums=('97df4c5355af018998b73d9fa4906c7a')
 
 build() {
   cd "${srcdir}"
